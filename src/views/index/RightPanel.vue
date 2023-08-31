@@ -586,6 +586,183 @@
               </el-button>
             </div>
           </template>
+
+          <template v-if="['EditTable'].includes(activeData.__config__.tag)">
+            <el-divider>表格属性</el-divider>
+            <el-form-item label-width="100px" label="表格尺寸">
+              <el-radio-group v-model="activeData.size" size="mini">
+                <el-radio-button label="medium">
+                  默认
+                </el-radio-button>
+                <el-radio-button label="small">
+                  小号
+                </el-radio-button>
+                <el-radio-button label="mini">
+                  迷你
+                </el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item label-width="100px" label="纵向边框">
+                  <el-switch
+                    v-model="activeData.border" size="small"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label-width="100px" label="是否可新增">
+                  <el-switch
+                    v-model="activeData['addAble']" size="small"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item label-width="100px" label="是否可修改">
+                  <el-switch
+                    v-model="activeData['editAble']" size="small"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label-width="100px" label="是否可删除">
+                  <el-switch
+                    v-model="activeData['delAble']" size="small"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item label-width="100px" label="固定序号列">
+                  <el-switch
+                    v-model="activeData['fixedNumber']" size="small"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label-width="100px" label="固定操作列">
+                  <el-switch
+                    v-model="activeData['fixedEdit']" size="small"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-form-item label-width="100px" label="是否显示序号">
+              <el-switch
+                v-model="activeData['showNumber']" size="small"
+              />
+            </el-form-item>
+
+            <el-divider>表格列属性</el-divider>
+
+            <draggable
+              :list="activeData.columns"
+              :animation="340"
+              group="selectItem"
+              handle=".option-drag"
+              @end="columnDragEnd"
+            >
+              <div v-for="(item, index) in activeData.columns" :key="index" class="select-item">
+                <div class="select-line-icon option-drag">
+                  <i class="el-icon-s-operation" />
+                </div>
+                <el-input :value="item.prop" placeholder="列字段" size="small" @input="columnPropChange(item,$event)" />
+                <el-input v-model="item.label" placeholder="列名称" size="small" />
+                <div class="edit-btn select-line-icon" @click="editColumn(item,index)">
+                  <i class="el-icon-edit-outline edit-btn-flag" />
+                </div>
+                <div class="close-btn select-line-icon" @click="delColumn(item,index)">
+                  <i class="el-icon-remove-outline" />
+                </div>
+              </div>
+            </draggable>
+
+            <div>
+              <el-button
+                style="margin-bottom: 15px"
+                icon="el-icon-circle-plus-outline"
+                type="text"
+                @click="addColumn"
+              >
+                添加一列
+              </el-button>
+            </div>
+
+            <el-divider>表格数据</el-divider>
+
+            <el-form-item label-width="100px" label="数据来源">
+              <el-radio-group v-model="activeData.__config__.tableDataType" size="mini">
+                <el-radio-button label="static">
+                  静态数据
+                </el-radio-button>
+                <el-radio-button label="dynamic">
+                  动态数据
+                </el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+
+            <template v-if="activeData.__config__.tableDataType === 'static'">
+              <el-input
+                :value="JSON.stringify( activeData.__config__.defaultValue )"
+                type="textarea"
+                :rows="4"
+                readonly
+                placeholder="请输入自定义数据(JSON格式)"
+              />
+            </template>
+
+            <template v-if="activeData.__config__.tableDataType === 'dynamic'">
+              <el-form-item label="接口地址">
+                <el-input
+                  v-model="activeData.__config__.url"
+                  :title="activeData.__config__.url"
+                  placeholder="请输入接口地址"
+                  clearable
+                >
+                  <el-select
+                    slot="prepend"
+                    v-model="activeData.__config__.method"
+                    :style="{width: '85px'}"
+                  >
+                    <el-option label="get" value="get" />
+                    <el-option label="post" value="post" />
+                    <el-option label="put" value="put" disabled />
+                    <el-option label="delete" value="delete" disabled />
+                  </el-select>
+                </el-input>
+              </el-form-item>
+              <el-form-item v-if="activeData.__config__.method === 'post'" label="请求体">
+                <el-input
+                  v-model="activeData.__config__.requestBody"
+                  type="textarea"
+                  :rows="4"
+                  placeholder="请输入请求体(application/json)格式"
+                />
+              </el-form-item>
+              <el-form-item label="数据位置">
+                <el-input
+                  v-model="activeData.__config__.dataPath"
+                  placeholder="请输入数据位置例如data.list"
+                />
+              </el-form-item>
+              <el-form-item label="操作">
+                <el-tooltip class="item" effect="dark" content="数据默认只在onMounted中获取，这里可以手动获取" placement="top">
+                  <el-button icon="el-icon-question" @click="activeData.__config__.renderKey+=1">
+                    获取数据
+                  </el-button>
+                </el-tooltip>
+                <el-tooltip class="item" effect="dark" content="使用动态数据时，一般不需要再config中存储数据" placement="top">
+                  <el-button icon="el-icon-question" @click="activeData.__config__.defaultValue=[]">
+                    清空数据
+                  </el-button>
+                </el-tooltip>
+              </el-form-item>
+            </template>
+          </template>
         </el-form>
         <!-- 表单属性 -->
         <el-form v-show="currentTab === 'form'" size="small" label-width="90px">
@@ -645,6 +822,7 @@
 
     <treeNode-dialog :visible.sync="dialogVisible" title="添加选项" @commit="addNode" />
     <icons-dialog :visible.sync="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon" />
+    <ColumnEdit ref="columnEditRef" :active-column="activeColumn" />
   </div>
 </template>
 
@@ -654,9 +832,10 @@ import TreeNodeDialog from '@/views/index/TreeNodeDialog'
 import { isNumberStr } from '@/utils/index'
 import IconsDialog from './IconsDialog'
 import {
-  inputComponents, selectComponents, layoutComponents
+  inputComponents, selectComponents, layoutComponents, columnSchema
 } from '@/components/generator/config'
 import { saveFormConf } from '@/utils/db'
+import ColumnEdit from '@/views/index/ColumnEdit'
 
 const dateTimeFormat = {
   date: 'yyyy-MM-dd',
@@ -675,7 +854,8 @@ const needRerenderList = ['tinymce']
 export default {
   components: {
     TreeNodeDialog,
-    IconsDialog
+    IconsDialog,
+    ColumnEdit
   },
   props: ['showField', 'activeData', 'formConf'],
   data() {
@@ -770,7 +950,8 @@ export default {
           const config = data.__config__
           return data.componentName || `${config.label}: ${data.__vModel__}`
         }
-      }
+      },
+      activeColumn: null
     }
   },
   computed: {
@@ -968,6 +1149,43 @@ export default {
       if (needRerenderList.includes(this.activeData.__config__.tag)) {
         this.activeData.__config__.renderKey = +new Date()
       }
+    },
+    // 添加列
+    addColumn() {
+      const config = this.activeData.__config__
+      const column = columnSchema(config.columnId++)
+      this.activeData.columns.push(column)
+      config.defaultValue.forEach(item => {
+        item[column.prop] = ''
+      })
+    },
+    // 编辑列
+    editColumn(column) {
+      this.$refs.columnEditRef.show = true
+      this.activeColumn = column
+    },
+    // 删除列
+    delColumn(column, index) {
+      const config = this.activeData.__config__
+      this.activeData.columns.splice(index, 1)
+      config.defaultValue.forEach(item => {
+        delete item[column.prop]
+      })
+    },
+    // 列拖拽
+    columnDragEnd() {
+      // 待优化因为强制更新组件代价很高
+      const config = this.activeData.__config__
+      config.renderKey = config.formId + new Date()
+    },
+    // 列字段修改
+    columnPropChange(column, value) {
+      const config = this.activeData.__config__
+      config.defaultValue.forEach(item => {
+        item[value] = item[column.prop]
+        delete item[column.prop]
+      })
+      column.prop = value
     }
   }
 }
@@ -997,6 +1215,10 @@ export default {
   & .close-btn {
     cursor: pointer;
     color: #f56c6c;
+  }
+  & .edit-btn {
+    cursor: pointer;
+    color: #409EFF;
   }
   & .el-input + .el-input {
     margin-left: 4px;

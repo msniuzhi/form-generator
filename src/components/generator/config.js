@@ -1,3 +1,20 @@
+// 列模型
+export function columnSchema(id) {
+  return {
+    prop: `column${id + 1}`,
+    label: `列${id + 1}`,
+    width: '',
+    minWidth: '',
+    align: 'center',
+    sortable: false,
+    resizable: false,
+    showOverflowTooltip: false,
+    fixed: null,
+    _columnDataType: 'text',
+    _customerHTML: '',
+    _editType: 'text'
+  }
+}
 // 表单属性【右面板】
 export const formConf = {
   formRef: 'elForm',
@@ -625,5 +642,71 @@ export const layoutComponents = [
     type: 'default',
     justify: 'start',
     align: 'top'
+  },
+  {
+    __config__: {
+      // 标签名
+      label: '编辑表格',
+      // 标签
+      tag: 'EditTable',
+      // icon
+      tagIcon: 'table',
+      // 默认数据
+      defaultValue: [
+        {
+          column1: '',
+          column2: '',
+          column3: ''
+        },
+        {
+          column1: '',
+          column2: '',
+          column3: ''
+        },
+        {
+          column1: '',
+          column2: '',
+          column3: ''
+        }
+      ],
+      // 布局方式
+      layout: 'colFormItem',
+      // 布局宽度
+      span: 24,
+      // 是否显示label
+      showLabel: true,
+      // label宽度
+      labelWidth: null,
+      // 列id自动递增
+      columnId: 3,
+      // 数据类型
+      tableDataType: 'static',
+      url: '',
+      method: '',
+      requestBody: '',
+      dataPath: ''
+    },
+    // 默认列信息
+    columns: [
+      columnSchema(0),
+      columnSchema(1),
+      columnSchema(2)
+    ],
+    // 表格尺寸
+    size: 'medium',
+    // 纵边框
+    border: true,
+    // 是否可新增
+    addAble: true,
+    // 是否可编辑
+    editAble: true,
+    // 是否可删除
+    delAble: true,
+    // 固定序号列
+    fixedNumber: false,
+    // 固定操作列
+    fixedEdit: false,
+    // 是否显示序号
+    showNumber: true
   }
 ]

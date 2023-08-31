@@ -16,6 +16,21 @@ const routes = [
     component: () => import(/* webpackChunkName: "parser-example" */'@/components/parser/example/Index.vue')
   },
   {
+    path: '/parserEditTable',
+    name: 'parser',
+    component: () => import(/* webpackChunkName: "parser-example" */'@/components/parser/example/editTable.vue')
+  },
+  {
+    path: '/qjt',
+    name: 'parser',
+    component: () => import(/* webpackChunkName: "parser-example" */'@/components/parser/example/qjt.vue')
+  },
+  {
+    path: '/cat',
+    name: 'parser',
+    component: () => import(/* webpackChunkName: "parser-example" */'@/components/parser/example/cat.vue')
+  },
+  {
     path: '/tinymce',
     name: 'tinymce',
     component: () => import(/* webpackChunkName: "tinymce-example" */'@/components/tinymce/example/Index.vue')

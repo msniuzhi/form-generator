@@ -1,4 +1,5 @@
 import { deepClone } from '@/utils/index'
+import EditTable from '@/components/customer/EditTable.vue'
 
 const componentChild = {}
 /**
@@ -76,6 +77,50 @@ function clearAttrs(dataObject) {
   delete dataObject.attrs.__methods__
 }
 
+function catchData(confClone) {
+  const {
+    tableDataType, url, method, requestBody, dataPath
+  } = confClone.__config__
+  if (tableDataType === 'dynamic' && url && method) {
+    if (isValidUrl(url)) {
+      const queryObj = {
+        method,
+        url
+      }
+      if (method === 'post') {
+        queryObj.headers = {
+          'Content-Type': 'application/json'
+        }
+        queryObj.data = requestBody
+      }
+      // 到底用什么发请求取决于你自己的需求
+      this.$axios(queryObj).then(({ data }) => {
+        // 这里做下兼容
+        if (dataPath) {
+          dataPath.split('.').forEach(path => {
+            data = data[path]
+          })
+        }
+        // 更新数据
+        if (data instanceof Array) {
+          this.$emit('input', data)
+        } else {
+          this.$message.error('数据非Array')
+        }
+      })
+    }
+  }
+}
+
+function isValidUrl(url) {
+  try {
+    const tmp = new URL(url)
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
 function makeDataObject() {
   // 深入数据对象：
   // https://cn.vuejs.org/v2/guide/render-function.html#%E6%B7%B1%E5%85%A5%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1
@@ -102,6 +147,13 @@ export default {
       type: Object,
       required: true
     }
+  },
+  components: {
+    EditTable
+  },
+  mounted() {
+    // 动态请求数据
+    catchData.call(this, this.conf)
   },
   render(h) {
     const dataObject = makeDataObject()
