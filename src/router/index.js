@@ -4,37 +4,36 @@ import Home from '@/views/index/Home.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/parser',
-    name: 'parser',
-    component: () => import(/* webpackChunkName: "parser-example" */'@/components/parser/example/Index.vue')
-  },
-  {
-    path: '/parserEditTable',
-    name: 'parser',
-    component: () => import(/* webpackChunkName: "parser-example" */'@/components/parser/example/editTable.vue')
-  },
-  {
-    path: '/qjt',
-    name: 'parser',
-    component: () => import(/* webpackChunkName: "parser-example" */'@/components/parser/example/qjt.vue')
-  },
-  {
-    path: '/cat',
-    name: 'parser',
-    component: () => import(/* webpackChunkName: "parser-example" */'@/components/parser/example/cat.vue')
-  },
-  {
-    path: '/tinymce',
-    name: 'tinymce',
-    component: () => import(/* webpackChunkName: "tinymce-example" */'@/components/tinymce/example/Index.vue')
-  }
+const routes = [{
+  path: '/',
+  name: 'home',
+  component: Home
+},
+{
+  path: '/parser',
+  name: 'parser',
+  component: () => import(/* webpackChunkName: "parser-example" */ '@/components/parser/example/Index.vue')
+},
+{
+  path: '/parserEditTable',
+  name: 'parserEditTable',
+  component: () => import(/* webpackChunkName: "parser-example" */ '@/components/parser/example/editTable.vue')
+},
+{
+  path: '/qjt',
+  name: 'qjt',
+  component: () => import(/* webpackChunkName: "parser-example" */ '@/components/parser/example/qjt.vue')
+},
+{
+  path: '/cat',
+  name: 'cat',
+  component: () => import(/* webpackChunkName: "parser-example" */ '@/components/parser/example/cat.vue')
+},
+{
+  path: '/tinymce',
+  name: 'tinymce',
+  component: () => import(/* webpackChunkName: "tinymce-example" */ '@/components/tinymce/example/Index.vue')
+}
 ]
 
 const router = new VueRouter({

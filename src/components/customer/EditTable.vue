@@ -27,7 +27,12 @@
         <template slot-scope="scope">
           <!-- 修改 -->
           <div v-if="editRows[scope.$index]">
-            <el-input v-if="item._editType=='number'" v-model="scope.row[item.prop]" type="number" size="small" />
+            <el-input
+              v-if="item._editType == 'number'"
+              v-model="scope.row[item.prop]"
+              type="number"
+              size="small"
+            />
             <el-input v-else v-model="scope.row[item.prop]" size="small" />
           </div>
           <!-- 显示 -->
