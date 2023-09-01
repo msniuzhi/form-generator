@@ -33,6 +33,11 @@ const routes = [{
   path: '/tinymce',
   name: 'tinymce',
   component: () => import(/* webpackChunkName: "tinymce-example" */ '@/components/tinymce/example/Index.vue')
+},
+{
+  path: '/photoWallTest',
+  name: 'photoWallTest',
+  component: () => import(/* webpackChunkName: "tinymce-example" */ '@/components/parser/example/photoWallTest.vue')
 }
 ]
 

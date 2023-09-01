@@ -763,6 +763,15 @@
               </el-form-item>
             </template>
           </template>
+
+          <template v-if="['PhotoWall'].includes(activeData.__config__.tag)">
+            <el-form-item label="图片宽度">
+              <el-input v-model="activeData.width" type="number" placeholder="请输入图片宽度" size="mini" />
+            </el-form-item>
+            <el-form-item label="图片高度">
+              <el-input v-model="activeData.height" type="number" placeholder="请输入图片高度" size="mini" />
+            </el-form-item>
+          </template>
         </el-form>
         <!-- 表单属性 -->
         <el-form v-show="currentTab === 'form'" size="small" label-width="90px">

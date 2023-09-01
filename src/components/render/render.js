@@ -1,5 +1,6 @@
 import { deepClone } from '@/utils/index'
 import EditTable from '@/components/customer/EditTable.vue'
+import PhotoWall from '@/components/customer/PhotoWall.vue'
 
 const componentChild = {}
 /**
@@ -149,7 +150,8 @@ export default {
     }
   },
   components: {
-    EditTable
+    EditTable,
+    PhotoWall
   },
   mounted() {
     // 动态请求数据
