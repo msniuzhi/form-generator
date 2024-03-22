@@ -78,6 +78,29 @@
               <el-radio-button label="bottom" />
             </el-radio-group>
           </el-form-item>
+          <!-- el-card 卡片 start-->
+          <div v-if="activeData.__config__.layout==='cardFormItem'">
+            <el-form-item label="卡片标题">
+              <el-input v-model="activeData.header" placeholder="卡片标题" />
+            </el-form-item>
+            <!-- <el-form-item label="卡片样式">
+              <el-input v-model="activeData.bodyStyle" type="textarea" rows="3" placeholder="css样式" />
+            </el-form-item> -->
+            <el-form-item label="阴影样式">
+              <el-radio-group v-model="activeData.shadow" size="small">
+                <el-radio-button label="never">
+                  无
+                </el-radio-button>
+                <el-radio-button label="hover">
+                  鼠标划过显示
+                </el-radio-button>
+                <el-radio-button label="always">
+                  有
+                </el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+          </div>
+          <!-- el-card 卡片 end-->
           <el-form-item v-if="activeData.__config__.labelWidth!==undefined" label="标签宽度">
             <el-input v-model.number="activeData.__config__.labelWidth" type="number" placeholder="请输入标签宽度" />
           </el-form-item>

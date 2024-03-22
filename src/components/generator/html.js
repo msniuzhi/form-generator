@@ -110,7 +110,7 @@ const layouts = {
     </el-row>`
     if (config.tag === 'el-card') {
       const header = scheme.header ? `header="${scheme.header}"` : ''
-      const bodyStyle = scheme.bodyStyle ? `:body-style="${scheme.bodyStyle}"` : ''
+      const bodyStyle = scheme.bodyStyle ? `:body-style=${scheme.bodyStyle}` : ''
       const shadow = scheme.shadow ? `shadow="${scheme.shadow}"` : ''
       str = `<el-card ${header} ${bodyStyle} ${shadow}>
           ${children.join('\n')}
