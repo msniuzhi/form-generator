@@ -195,8 +195,9 @@ const tags = {
     const step = el.step ? `:step='${el.step}'` : ''
     const stepStrictly = el['step-strictly'] ? 'step-strictly' : ''
     const precision = el.precision ? `:precision='${el.precision}'` : ''
+    const style = el.style && el.style.width ? `style='width: "${el.style.width}"'` : ''
 
-    return `<${tag} ${vModel} ${placeholder} ${step} ${stepStrictly} ${precision} ${controlsPosition} ${min} ${max} ${disabled}></${tag}>`
+    return `<${tag} ${vModel} ${placeholder} ${step} ${stepStrictly} ${precision} ${controlsPosition} ${min} ${max} ${disabled} ${style}></${tag}>`
   },
   'el-select': el => {
     const {

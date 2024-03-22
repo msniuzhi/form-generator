@@ -120,6 +120,7 @@ export const inputComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/input-number'
     },
     placeholder: '',
+    style: { width: '100%' },
     min: undefined,
     max: undefined,
     step: 1,
