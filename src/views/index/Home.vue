@@ -347,6 +347,11 @@ export default {
         config.componentName = `row${this.idGlobal}`
         !Array.isArray(config.children) && (config.children = [])
         delete config.label // rowFormItem无需配置label属性
+      } else if (config.layout === 'cardFormItem') {
+        // 卡片格式
+        config.componentName = `card${this.idGlobal}`
+        !Array.isArray(config.children) && (config.children = [])
+        delete config.label // cardFormItem无需配置label属性
       }
       if (Array.isArray(config.children)) {
         config.children = config.children.map(childItem => this.createIdAndKey(childItem))

@@ -44,6 +44,19 @@ const layouts = {
         </el-row>
       </el-col>
     )
+  },
+  cardFormItem(h, scheme) {
+    let child = renderChildren.apply(this, arguments)
+    if (scheme.type === 'flex') {
+      child = <el-row type={scheme.type} justify={scheme.justify} align={scheme.align}>
+              {child}
+            </el-row>
+    }
+    return (
+      <el-card header={scheme.header} body-style={scheme.bodyStyle} shadow={scheme.shadow}>
+        {child}
+      </el-card>
+    )
   }
 }
 
