@@ -190,16 +190,16 @@ export default {
       saveIdGlobalDebounce: debounce(340, saveIdGlobal),
       leftComponents: [
         {
+          title: '布局型组件',
+          list: layoutComponents
+        },
+        {
           title: '输入型组件',
           list: inputComponents
         },
         {
           title: '选择型组件',
           list: selectComponents
-        },
-        {
-          title: '布局型组件',
-          list: layoutComponents
         }
       ]
     }
