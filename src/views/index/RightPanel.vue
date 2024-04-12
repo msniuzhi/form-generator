@@ -31,34 +31,6 @@
               </el-option-group>
             </el-select>
           </el-form-item>
-
-          <!-- 标题文字 -->
-          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="标题文字">
-            <el-input v-model="activeData.titleText" placeholder="请输入标题文字" />
-          </el-form-item>
-          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="标题大小">
-            <el-input v-model.number="activeData.fontSize" type="number" placeholder="请输入标题文字大小" />
-          </el-form-item>
-          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="标题颜色">
-            <el-color-picker v-model="activeData.fontColor" />
-          </el-form-item>
-          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="是否加粗">
-            <el-switch v-model="activeData.fontWeight" />
-          </el-form-item>
-          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="对齐方式">
-            <el-radio-group v-model="activeData.textAlign">
-              <el-radio-button label="left">
-                居左
-              </el-radio-button>
-              <el-radio-button label="center">
-                居中
-              </el-radio-button>
-              <el-radio-button label="right">
-                居右
-              </el-radio-button>
-            </el-radio-group>
-          </el-form-item>
-
           <el-form-item v-if="activeData.__vModel__!==undefined" label="字段名">
             <el-input v-model="activeData.__vModel__" placeholder="请输入字段名（v-model）" />
           </el-form-item>
@@ -106,6 +78,33 @@
               <el-radio-button label="bottom" />
             </el-radio-group>
           </el-form-item>
+          <!-- 文本文字 start -->
+          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="文本文字">
+            <el-input v-model="activeData.titleText" placeholder="请输入文本文字" />
+          </el-form-item>
+          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="文本大小">
+            <el-input v-model.number="activeData.fontSize" type="number" placeholder="请输入文本文字大小" />
+          </el-form-item>
+          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="文本颜色">
+            <el-color-picker v-model="activeData.fontColor" />
+          </el-form-item>
+          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="是否加粗">
+            <el-switch v-model="activeData.fontWeight" />
+          </el-form-item>
+          <el-form-item v-if="activeData.__config__.tag === 'row-title'" label="对齐方式">
+            <el-radio-group v-model="activeData.textAlign">
+              <el-radio-button label="left">
+                居左
+              </el-radio-button>
+              <el-radio-button label="center">
+                居中
+              </el-radio-button>
+              <el-radio-button label="right">
+                居右
+              </el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+          <!-- 文本文字 end -->
            <!-- el-card 卡片 start-->
            <div v-if="activeData.__config__.layout==='cardFormItem'">
             <el-form-item label="卡片标题">

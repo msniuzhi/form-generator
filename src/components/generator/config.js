@@ -33,17 +33,19 @@ export const formConf = {
 export const inputComponents = [
   {
     __config__: {
-      layout: 'showFormItem',
+      label: '文本容器',
+      labelWidth: 0,
+      showLabel: false,
+      layout: 'colFormItem',
       tag: 'row-title',
       tagIcon: 'row',
-      label: '标题容器',
       document: 'https://element.eleme.cn/#/zh-CN/component/layout#row-attributes'
     },
-    titleText: '单行文本',
-    fontSize: 20,
+    titleText: '文本容器',
+    fontSize: 14,
     fontColor: '#606266',
     fontWeight: false,
-    textAlign: 'left',
+    textAlign: 'left'
   },
   {
     // 组件的自定义配置

@@ -150,7 +150,10 @@ const layouts = {
 
 const tags = {
   'row-title': el => {
-    return `<h1 style="font-size: ${el.fontSize}px;color: ${el.fontColor};font-weight: ${el.fontWeight ? 600 : 400};text-align: ${el.textAlign};">${el.titleText}</h1>`
+    const {
+      vModel
+    } = attrBuilder(el)
+    return `<font ${vModel} titleText="${el.titleText}" style="font-size: ${el.fontSize}px;color: ${el.fontColor};font-weight: ${el.fontWeight ? 'bold' : 'normal'};text-align: ${el.textAlign};">${el.titleText}</font>`
   },
   'el-card': el => {
     const {
