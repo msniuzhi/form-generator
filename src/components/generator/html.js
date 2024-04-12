@@ -136,10 +136,22 @@ const layouts = {
     </el-card>`
     str = colWrapper(scheme, str)
     return str
+  },
+  showFormItem(scheme) {
+    const config = scheme.__config__
+    const tagDom = tags[config.tag] ? tags[config.tag](scheme) : null
+    let str = `<el-row>
+      ${tagDom}
+    </el-row>`
+    str = colWrapper(scheme, str)
+    return str
   }
 }
 
 const tags = {
+  'row-title': el => {
+    return `<h1 style="font-size: ${el.fontSize}px;color: ${el.fontColor};font-weight: ${el.fontWeight ? 600 : 400};text-align: ${el.textAlign};">${el.titleText}</h1>`
+  },
   'el-card': el => {
     const {
       tag

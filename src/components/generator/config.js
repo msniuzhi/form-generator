@@ -32,6 +32,20 @@ export const formConf = {
 // 输入型组件 【左面板】
 export const inputComponents = [
   {
+    __config__: {
+      layout: 'showFormItem',
+      tag: 'row-title',
+      tagIcon: 'row',
+      label: '标题容器',
+      document: 'https://element.eleme.cn/#/zh-CN/component/layout#row-attributes'
+    },
+    titleText: '单行文本',
+    fontSize: 20,
+    fontColor: '#606266',
+    fontWeight: false,
+    textAlign: 'left',
+  },
+  {
     // 组件的自定义配置
     __config__: {
       label: '单行文本',

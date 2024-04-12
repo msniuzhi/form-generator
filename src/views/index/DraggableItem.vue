@@ -94,6 +94,27 @@ const layouts = {
       </el-col>
     )
   },
+  showFormItem(h, currentItem, index, list) {
+    const { activeItem } = this.$listeners
+    const config = currentItem.__config__
+    const className = this.activeId === config.formId
+      ? 'drawing-row-item active-from-item'
+      : 'drawing-row-item'
+    const spanText = 'row'+config.formId
+    return (
+      <el-col span={config.span}>
+        <el-row gutter={config.gutter} class={className}
+          nativeOnClick={event => { activeItem(currentItem); event.stopPropagation() }}>
+          <span class="component-name">{spanText}</span>
+          <h1>
+            <render key={config.renderKey} conf={currentItem} onInput={ event => { this.$set(config, 'defaultValue', event) }}></render>
+          </h1>
+          {components.itemBtns.apply(this, arguments)}
+        </el-row>
+      </el-col>
+    )
+  },
+
   raw(h, currentItem, index, list) {
     const config = currentItem.__config__
     const child = renderChildren.apply(this, arguments)
