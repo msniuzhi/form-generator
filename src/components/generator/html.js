@@ -342,16 +342,6 @@ function attrBuilder(el) {
   }
 }
 
-// el-card 子级
-function buildElCardChild(scheme) {
-  const children = []
-  const slot = scheme.__slot__ || {}
-  if (slot && slot.header) {
-    children.push(`${slot.header}`)
-  }
-  return children.join('\n')
-}
-
 // el-buttin 子级
 function buildElButtonChild(scheme) {
   const children = []
