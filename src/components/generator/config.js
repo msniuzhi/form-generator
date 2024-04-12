@@ -137,6 +137,7 @@ export const inputComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/input-number'
     },
     placeholder: '',
+    style: { width: '100%' },
     min: undefined,
     max: undefined,
     step: 1,
@@ -531,6 +532,7 @@ export const layoutComponents = [
   {
     __config__: {
       layout: 'rowFormItem',
+      tag: 'el-row',
       tagIcon: 'row',
       label: '行容器',
       layoutTree: true,
@@ -539,6 +541,26 @@ export const layoutComponents = [
     type: 'default',
     justify: 'start',
     align: 'top'
+  },
+  {
+    __config__: {
+      layout: 'cardFormItem',
+      tag: 'el-card',
+      tagIcon: 'cc-card-o',
+      label: '卡片',
+      showLabel: false,
+      layoutTree: true,
+      document: 'https://element-plus.org/zh-CN/component/card.html#api'
+    },
+    __slot__: {
+      header: ''
+    },
+    type: 'default',
+    justify: 'start',
+    align: 'top',
+    header: '卡片',
+    bodyStyle: '',
+    shadow: 'never'
   },
   {
     __config__: {
@@ -581,7 +603,7 @@ export const layoutComponents = [
       method: 'get',
       dataPath: 'list',
       dataConsumer: 'data',
-      url: 'https://www.fastmock.site/mock/f8d7a54fb1e60561e2f720d5a810009d/fg/tableData',
+      url: 'https://api.thecatapi.com/v1/images/search?limit=10',
       children: [{
         __config__: {
           layout: 'raw',

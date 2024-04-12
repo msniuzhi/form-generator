@@ -1,6 +1,7 @@
 const styles = {
   'el-rate': '.el-rate{display: inline-block; vertical-align: text-top;}',
-  'el-upload': '.el-upload__tip{line-height: 1.2;}'
+  'el-upload': '.el-upload__tip{line-height: 1.2;}',
+  'el-card': '.el-card{margin-bottom: 10px;}'
 }
 
 function addCss(cssList, el) {

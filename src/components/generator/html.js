@@ -108,12 +108,49 @@ const layouts = {
     let str = `<el-row ${type} ${justify} ${align} ${gutter}>
       ${children.join('\n')}
     </el-row>`
+    if (config.tag === 'el-card') {
+      const header = scheme.header ? `header="${scheme.header}"` : ''
+      const bodyStyle = scheme.bodyStyle ? `:body-style=${scheme.bodyStyle}` : ''
+      const shadow = scheme.shadow ? `shadow="${scheme.shadow}"` : ''
+      str = `<el-card ${header} ${bodyStyle} ${shadow}>
+          ${children.join('\n')}
+      </el-card>`
+    }
+    str = colWrapper(scheme, str)
+    return str
+  },
+  cardFormItem(scheme) {
+    const config = scheme.__config__
+    const type = scheme.type === 'default' ? '' : `type="${scheme.type}"`
+    const justify = scheme.type === 'default' ? '' : `justify="${scheme.justify}"`
+    const align = scheme.type === 'default' ? '' : `align="${scheme.align}"`
+    const gutter = scheme.gutter ? `:gutter="${scheme.gutter}"` : ''
+    const children = config.children.map(el => layouts[el.__config__.layout](el))
+    const header = scheme.header ? `header="${scheme.header}"` : ''
+    const bodyStyle = scheme.bodyStyle ? `:body-style="${scheme.bodyStyle}"` : ''
+    const shadow = scheme.shadow ? `shadow="${scheme.shadow}"` : ''
+    let str = `<el-card ${header} ${bodyStyle} ${shadow}>
+      <el-row ${type} ${justify} ${align} ${gutter}>
+        ${children.join('\n')}
+      </el-row>
+    </el-card>`
     str = colWrapper(scheme, str)
     return str
   }
 }
 
 const tags = {
+  'el-card': el => {
+    const {
+      tag
+    } = attrBuilder(el)
+    const header = el.header ? `header="${el.header}"` : ''
+    const bodyStyle = el.bodyStyle ? `:body-style="${el.bodyStyle}"` : ''
+    const shadow = el.shadow ? `shadow="${el.shadow}"` : ''
+    let child = buildElCardChild(el)
+    if (child) child = `\n${child}\n` // 换行
+    return `<${tag} ${header} ${bodyStyle} ${shadow}>${child}</${tag}>`
+  },
   'el-button': el => {
     const {
       tag, disabled
@@ -158,8 +195,9 @@ const tags = {
     const step = el.step ? `:step='${el.step}'` : ''
     const stepStrictly = el['step-strictly'] ? 'step-strictly' : ''
     const precision = el.precision ? `:precision='${el.precision}'` : ''
+    const style = el.style && el.style.width ? `style='width: "${el.style.width}"'` : ''
 
-    return `<${tag} ${vModel} ${placeholder} ${step} ${stepStrictly} ${precision} ${controlsPosition} ${min} ${max} ${disabled}></${tag}>`
+    return `<${tag} ${vModel} ${placeholder} ${step} ${stepStrictly} ${precision} ${controlsPosition} ${min} ${max} ${disabled} ${style}></${tag}>`
   },
   'el-select': el => {
     const {
@@ -310,6 +348,15 @@ function buildElButtonChild(scheme) {
   const slot = scheme.__slot__ || {}
   if (slot.default) {
     children.push(slot.default)
+  }
+  return children.join('\n')
+}
+// el-card 子级
+function buildElCardChild(scheme) {
+  const children = []
+  const slot = scheme.__slot__ || {}
+  if (slot && slot.header) {
+    children.push(`${slot.header}`)
   }
   return children.join('\n')
 }
