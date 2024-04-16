@@ -90,6 +90,14 @@ const layouts = {
       labelWidth = 'label-width="0"'
       label = ''
     }
+    if (config.tag === 'EditTable') {
+      // const header = scheme.header ? `header="${scheme.header}"` : ''
+      // const bodyStyle = scheme.bodyStyle ? `:body-style=${scheme.bodyStyle}` : ''
+      // const shadow = scheme.shadow ? `shadow="${scheme.shadow}"` : ''
+      str = `<h1>
+          测试
+      </h1>`
+    }
     const required = !ruleTrigger[config.tag] && config.required ? 'required' : ''
     const tagDom = tags[config.tag] ? tags[config.tag](scheme) : null
     let str = `<el-form-item ${labelWidth} ${label} prop="${scheme.__vModel__}" ${required}>
@@ -149,6 +157,18 @@ const layouts = {
 }
 
 const tags = {
+  'EditTable': el => {
+    const {
+      vModel
+    } = attrBuilder(el)
+    let columns = buildEditTableChild(el)
+    return `
+    <el-table
+    style="width: 100%">
+    ${columns}
+  </el-table>
+  `
+  },
   'row-title': el => {
     const {
       vModel
@@ -374,6 +394,31 @@ function buildElCardChild(scheme) {
     children.push(`${slot.header}`)
   }
   return children.join('\n')
+}
+
+// EditTable 子级
+function buildEditTableChild(scheme) {
+  const columns = []
+  const slot = scheme.columns || {}
+  for (const item of slot) {
+    if(item.width === ""){
+      item.width = 'auto'
+    }
+    console.log(item)
+    columns.push(`
+    <el-table-column 
+    :prop="${item.prop}"
+    :label="${item.prop}"
+    :align="${item.align}"
+    :width="${item.width}"
+    :sortable="${item.sortable}"
+    :resizable="${item.resizable}"
+    :fixed="${item.fixed}"
+    :show-overflow-tooltip="${item.showOverflowTooltip}"></el-table-column>`)
+  }
+  // children.push(`${slot.header}`)
+
+  return columns
 }
 
 // el-input 子级

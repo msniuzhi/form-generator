@@ -775,5 +775,8 @@ export const layoutComponents = [
     width: 300,
     // 图片高度
     height: 168
-  }
+  },
+  
+  
+
 ]
